@@ -1,3 +1,4 @@
+//Превью выбранной статьи на банере
 const news = document.querySelectorAll('.news-thumbnails__item');
 const firstNews = news[0];
 const bannerNews = document.querySelector('.banner-news');
@@ -32,3 +33,18 @@ for (let i = 0; i < news.length; i++) {
     news[i],
   );
 }
+
+//Выделение элемента пагинации текущей страницы
+const pageButtonsNode = document.querySelectorAll('.pagination__item');
+const pageButtons = [...pageButtonsNode];
+pageButtons[0].classList.add('pagination__item--current');
+const currentButton = document.querySelector('.pagination__item--current');
+let params = new URLSearchParams(document.location.search);
+let value = params.get('page');
+pageButtons.forEach(function (pageButton) {
+  const buttonValue = pageButton.querySelector('p').textContent;
+  if (value == buttonValue) {
+    currentButton.classList.remove('pagination__item--current');
+    pageButton.classList.add('pagination__item--current');
+  }
+});
