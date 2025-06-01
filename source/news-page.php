@@ -1,6 +1,5 @@
 <?php
-  require_once 'include/database.php';
-  session_start();
+  require_once 'include/paginator.php';
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -24,11 +23,9 @@
       <div class="news-wrapper">
 
         <?php
-          require_once 'include/paginator.php';
           $id = htmlspecialchars($_GET['search']);
 
-          $current_news = new DBPaginator('news-page.php', 1);
-          $items = $current_news->getItems("SELECT * FROM `news` WHERE id = $id");
+          $items = mysqli_query($link, "SELECT * FROM `news` WHERE `id` = $id");
           foreach ($items as $item){
 
           echo '<div class="breadcrumbs">
