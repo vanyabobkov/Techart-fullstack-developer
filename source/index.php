@@ -1,6 +1,5 @@
 <?php
   require_once 'include/paginator.php';
-  session_start();
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -32,37 +31,45 @@
       <section class="news-thumbnails">
         <div class="news-thumbnails__content">
           <h1>Новости</h1>
-          <!-- Здесь будут выводиться новости из БД -->
           <ul class="news-thumbnails__list">
             <?php
-              // Текущий URL и 4 шт. на странице
-              $peger = new DBPaginator('index.php', 4);
-              $items = $peger->getItems("SELECT * FROM `news` ORDER BY date DESC");
-
-              /* Инфо о текущей странице */
-              $peger->page;
-              $peger->amt;
-              ?>
-                <?php foreach ($items as $item){
-                  echo '<li class="news-thumbnails__item">
-                    <div class="news-thumbnails__content">
-                      <div class="news-thumbnails__date">'.$item["date"].'</div>
-                      <h2 class="news-thumbnails__title">'.$item["title"].'</h2>
-                      <div class="news-thumbnails__announce">'.$item["announce"].'</div>
-                      <p class="visually-hidden">'.$item["image"].'</p>
+            // Здесь будут выводиться новости из БД
+              $items = mysqli_query($link, "SELECT * FROM `news` ORDER BY date DESC LIMIT $firstInPage,$countNewsInPage");
+              $myrow = mysqli_fetch_array($items);
+              foreach ($items as $item)
+              {
+                echo '<li class="news-thumbnails__item">
+                  <div class="news-thumbnails__content">
+                    <div class="news-thumbnails__date">'.$item["date"].'</div>
+                    <h2 class="news-thumbnails__title">'.$item["title"].'</h2>
+                    <div class="news-thumbnails__announce">'.$item["announce"].'</div>
+                    <p class="visually-hidden">'.$item["image"].'</p>
+                  </div>
+                  <a href="news-page.php?search='.$item["id"].'" class="news-thumbnails__link">
+                    <div class="news-thumbnails__link--block">
+                      <p class="news-thumbnails__link--text">Подробнее</p>
+                      <div class="news-thumbnails__link--arrow"></div>
                     </div>
-                    <a href="news-page.php?search='.$item["id"].'" class="news-thumbnails__link">
-                      <div class="news-thumbnails__link--block">
-                        <p class="news-thumbnails__link--text">Подробнее</p>
-                        <div class="news-thumbnails__link--arrow"></div>
-                      </div>
-                    </a>
-                  </li>';
-                } ?>
+                  </a>
+                </li>';
+              }
+            ?>
           </ul>
         </div>
         <div class="pagination">
-          <?php echo $peger->display; ?>
+          <?php
+            // Пагинация
+            echo '<ul class="pagination__list">';
+            for ($i = 1; $i <= $countPages; $i++){
+              echo '<li class="pagination__item"><a class=pagination__link href=index.php?page='.$i.'><p>'.$i.'</p></a></li>';
+            };
+            if ($currentPage == $countPages) {
+              echo '<li class="pagination__item visually-hidden"><a class=pagination__link href=index.php?page='.$nextPage.'><p></p></a></li>';
+            } else {
+              echo '<li class="pagination__item"><a class=pagination__link href=index.php?page='.$nextPage.'><p></p></a></li>';
+            };
+            echo '</ul>';
+          ?>
         </div>
       </section>
     </div>
