@@ -42,7 +42,7 @@
                 <div class="news__date">'.$item["date"].'</div>
                 <h2 class="news__announce">'.$item["announce"].'</h2>
                 <div class="news__text">'.$item["content"].'</div>
-                <a href="index.php" class="news__link">
+                <a href="'.$_SERVER['HTTP_REFERER'].'" class="news__link">
                   <div class="news__link--block">
                     <p class="news__link--text">Назад к новостям</p>
                     <div class="news__link--arrow-back"></div>
@@ -61,6 +61,11 @@
   <footer class="page-footer">
     <div class="page-footer__content">© 2023 — 2412 «Галактический вестник»</div>
   </footer>
+  <script>
+      const newsDate = document.querySelector('.news__date');
+      const array = newsDate.textContent.split('-');
+      newsDate.textContent = array[2] + '.' + array[1] + '.' + array[0];
+  </script>
 </body>
 </html>
 

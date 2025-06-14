@@ -39,11 +39,11 @@
               foreach ($items as $item)
               {
                 echo '<li class="news-thumbnails__item">
-                  <div class="news-thumbnails__content">
+                  <div class="news-thumbnails__container">
                     <div class="news-thumbnails__date">'.$item["date"].'</div>
                     <h2 class="news-thumbnails__title">'.$item["title"].'</h2>
                     <div class="news-thumbnails__announce">'.$item["announce"].'</div>
-                    <p class="visually-hidden">'.$item["image"].'</p>
+                    <p class="news-thumbnails__image visually-hidden">'.$item["image"].'</p>
                   </div>
                   <a href="news-page.php?search='.$item["id"].'" class="news-thumbnails__link">
                     <div class="news-thumbnails__link--block">
@@ -77,6 +77,6 @@
   <footer class="page-footer">
     <div class="page-footer__content">© 2023 — 2412 «Галактический вестник»</div>
   </footer>
-  <script src="js/main.js"></script>
+  <script src="js/main.js" type="module"></script>
 </body>
 </html>
